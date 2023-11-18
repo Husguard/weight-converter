@@ -43,8 +43,10 @@ function onRestore() {
 
 idChooseFile.onclick = async function() {
   const file = await window.showOpenFilePicker();
-  [fileEntry] = file;
-  fileContents = await file.getFile();
+  const [temp] = file;
+
+  fileEntry = temp;
+  fileContents = await temp.getFile();
   onSave();
   onRefresh();
 };
