@@ -1,6 +1,8 @@
 let fileEntry = undefined;
 let fileContents = undefined;
 
+// window.showOpenFilePicker()
+
 const idFileContents = document.getElementById("idFileContents");
 const idChooseFile = document.getElementById("idChooseFile");
 const idErrorLabel = document.getElementById("errorLabel");
