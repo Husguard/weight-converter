@@ -1,8 +1,6 @@
 let fileEntry = undefined;
 let fileContents = undefined;
 
-// window.showOpenFilePicker()
-
 const idFileContents = document.getElementById("idFileContents");
 const idChooseFile = document.getElementById("idChooseFile");
 const idErrorLabel = document.getElementById("errorLabel");
@@ -38,7 +36,11 @@ function onRestore() {
   });
 }
 
-idChooseFile.onclick = function() {
+idChooseFile.onclick = async function() {
+
+  const file = await window.showOpenFilePicker();
+  console.log(file);
+
   chrome.fileSystem.chooseEntry(chooseEntryOptions, function(entry) {
     fileEntry = entry;
     fileContents = "Unknown!";
