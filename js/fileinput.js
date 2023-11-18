@@ -47,7 +47,9 @@ idChooseFile.onclick = async function() {
 
   fileEntry = temp;
   fileContents = await temp.getFile();
-  fileContents = await temp.text();
+
+  console.log(fileContents)
+  console.log(fileContents.text())
   onSave();
   onRefresh();
 };
