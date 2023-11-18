@@ -13,16 +13,21 @@ const chooseEntryOptions = {
   }],
 };
 
+const pickerOpts = {
+  excludeAcceptAllOption: true,
+  multiple: false,
+};
+
 function onRefresh() {
   idChooseFile.innerText = fileEntry ? fileEntry.name : 'Click to choose...';
   idFileContents.innerText = fileContents !== undefined ? fileContents : "Unknown!";
 }
 
 function onSave() {
-  if (fileEntry) {
-    const retainedEntry = chrome.fileSystem.retainEntry(fileEntry);
-    chrome.storage.local.set({'retainedEntry': retainedEntry});
-  }
+  // if (fileEntry) {
+  //   const retainedEntry = chrome.fileSystem.retainEntry(fileEntry);
+  //   chrome.storage.local.set({'retainedEntry': retainedEntry});
+  // }
 }
 
 function onRestore() {
@@ -37,16 +42,11 @@ function onRestore() {
 }
 
 idChooseFile.onclick = async function() {
-
-  const file = await window.showOpenFilePicker();
-  console.log(file);
-
-  chrome.fileSystem.chooseEntry(chooseEntryOptions, function(entry) {
-    fileEntry = entry;
-    fileContents = "Unknown!";
-    onSave();
-    onRefresh();
-  });
+  const file = await window.showOpenFilePicker(pickerOpts);
+  [fileEntry] = file;
+  fileContents = await file.getFile();
+  onSave();
+  onRefresh();
 };
 
 function chompExtension(s) {
@@ -92,7 +92,5 @@ else {
   console.error("chrome.runtime doesnt exists");
 }
 
-
-
 onRefresh();
-onRestore();
+// onRestore();
